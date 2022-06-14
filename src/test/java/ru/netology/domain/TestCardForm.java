@@ -1,6 +1,7 @@
 package ru.netology.domain;
 
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,7 +18,7 @@ public class TestCardForm {
 
     @BeforeAll
     public static void setUpAll() {
-        System.setProperty("webdriver.chrome.driver", "ChromeDriver/chromedriver-2");
+        WebDriverManager.chromedriver().setup();
     }
 
     @BeforeEach
@@ -91,22 +92,12 @@ public class TestCardForm {
         assertEquals("Ваша заявка успешно отправлена! Наш менеджер свяжется с вами в ближайшее время.", text.trim());
     }
 
-    @Test
-    public void shouldEmptyPhoneField() {
-        driver.get("http://localhost:9999");
-        driver.findElement(By.cssSelector("[data-test-id=name] input")).sendKeys("Артём Астафьев");
-        driver.findElement(By.cssSelector("[data-test-id=agreement]")).click();
-        driver.findElement(By.className("button")).click();
-
-        String text = driver.findElement(By.cssSelector("[data-test-id=phone].input_invalid .input__sub")).getText();
-        assertEquals("Поле обязательно для заполнения", text.trim());
-    }
 
     @Test
     public void shouldPhoneField() {
         driver.get("http://localhost:9999");
         driver.findElement(By.cssSelector("[data-test-id=name] input")).sendKeys("Арташес Креведов");
-        driver.findElement(By.cssSelector("[data-test-id=phone] input")).sendKeys("+7988-722-34-18");
+        driver.findElement(By.cssSelector("[data-test-id=phone] input")).sendKeys("+7988-722-34-189");
         driver.findElement(By.cssSelector("[data-test-id=agreement]")).click();
         driver.findElement(By.className("button")).click();
 
